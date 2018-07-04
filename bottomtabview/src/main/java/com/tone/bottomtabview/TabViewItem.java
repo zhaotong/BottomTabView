@@ -1,11 +1,11 @@
 package com.tone.bottomtabview;
 
-public class TabItem {
+public class TabViewItem {
 
     private String title;
     private int resId;
 
-    public TabItem(String title, int resId) {
+    public TabViewItem(String title, int resId) {
         this.title = title;
         this.resId = resId;
     }

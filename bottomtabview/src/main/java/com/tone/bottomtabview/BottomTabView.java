@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class BottomTabView extends TabLayout {
 
-    private SparseArray<TabItem> tabItems = new SparseArray<>();
+    private SparseArray<TabViewItem> tabItems = new SparseArray<>();
     private LayoutInflater inflater;
     private OnTabItemSelectedListener selectedListener;
 
@@ -42,7 +42,7 @@ public class BottomTabView extends TabLayout {
                 if (tab.getCustomView() != null)
                     tab.getCustomView().setSelected(true);
                 if (selectedListener != null)
-                    selectedListener.onTabSelected(tab,getSelectedTabPosition());
+                    selectedListener.onTabSelected(getSelectedTabPosition());
 
             }
 
@@ -51,7 +51,7 @@ public class BottomTabView extends TabLayout {
                 if (tab.getCustomView() != null)
                     tab.getCustomView().setSelected(false);
                 if (selectedListener != null)
-                    selectedListener.onTabUnselected(tab,tab.getPosition());
+                    selectedListener.onTabUnselected(tab.getPosition());
 
             }
 
@@ -64,11 +64,11 @@ public class BottomTabView extends TabLayout {
     }
 
 
-    public void setTabItems(SparseArray<TabItem> tabItems) {
+    public void setTabItems(SparseArray<TabViewItem> tabItems) {
         this.tabItems = tabItems;
         int count = getTabCount();
         for (int i = 0; i < count; i++) {
-            TabItem item = tabItems.get(i);
+            TabViewItem item = tabItems.get(i);
             Tab tab = getTabAt(i);
 
             View view = inflater.inflate(R.layout.bottom_tab_view_item_layout, null);
@@ -86,14 +86,6 @@ public class BottomTabView extends TabLayout {
 
     public void setSelectedListener(OnTabItemSelectedListener selectedListener) {
         this.selectedListener = selectedListener;
-    }
-
-    public interface OnTabItemSelectedListener {
-
-        public void onTabSelected(Tab tab,int position);
-
-        public void onTabUnselected(Tab tab,int position);
-
     }
 
 
