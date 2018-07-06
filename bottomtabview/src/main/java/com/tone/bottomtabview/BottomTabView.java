@@ -64,9 +64,12 @@ public class BottomTabView extends TabLayout {
     }
 
 
-    public void setTabItems(SparseArray<TabViewItem> tabItems) {
-        this.tabItems = tabItems;
+    public void setTabItems(SparseArray<TabViewItem> items) throws Exception {
+        if (items != null)
+            this.tabItems = items;
         int count = getTabCount();
+        if (count != tabItems.size())
+            throw new Exception("item's size ");
         for (int i = 0; i < count; i++) {
             TabViewItem item = tabItems.get(i);
             Tab tab = getTabAt(i);
