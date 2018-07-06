@@ -2,7 +2,7 @@ package com.tone.bottomtabview;
 
 public class TabViewItem {
 
-    private String title;
+    private String title="";
     private int resId;
     private int type;
 

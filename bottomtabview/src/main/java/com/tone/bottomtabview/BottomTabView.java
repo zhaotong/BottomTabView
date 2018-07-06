@@ -79,8 +79,13 @@ public class BottomTabView extends TabLayout {
             TextView textView = view.findViewById(R.id.bottom_tab_view_item_text);
             textView.setText(item.getTitle());
             textView.setTextColor(getTabTextColors());
-            imageView.setImageResource(item.getResId());
-            imageView.setImageTintList(getTabTextColors());
+            if (item.getResId() == 0) {
+                imageView.setVisibility(GONE);
+            } else {
+                imageView.setImageResource(item.getResId());
+                imageView.setImageTintList(getTabTextColors());
+            }
+
 
             tab.setCustomView(view);
         }
