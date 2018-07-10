@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,8 @@ public class BottomTabView extends TabLayout {
     private SparseArray<TabViewItem> tabItems = new SparseArray<>();
     private LayoutInflater inflater;
     private OnTabItemSelectedListener selectedListener;
+    private int imageWidth, imageHeight;
+    private float textSize;
 
     public BottomTabView(Context context) {
         super(context);
@@ -76,8 +79,17 @@ public class BottomTabView extends TabLayout {
 
             View view = inflater.inflate(R.layout.bottom_tab_view_item_layout, null);
             ImageView imageView = view.findViewById(R.id.bottom_tab_view_item_icon);
+
+            if (imageWidth != 0 && imageHeight != 0) {
+                ViewGroup.LayoutParams params = imageView.getLayoutParams();
+                params.width = imageWidth;
+                params.height = imageHeight;
+                imageView.setLayoutParams(params);
+            }
             TextView textView = view.findViewById(R.id.bottom_tab_view_item_text);
             textView.setText(item.getTitle());
+            if (textSize != 0)
+                textView.setTextSize(textSize);
             textView.setTextColor(getTabTextColors());
             if (item.getResId() == 0) {
                 imageView.setVisibility(GONE);
@@ -91,6 +103,27 @@ public class BottomTabView extends TabLayout {
         }
     }
 
+    public int getImageWidth() {
+        return imageWidth;
+    }
+
+    public void setImageWidthHeight(int imageWidth,int imageHeight) {
+        this.imageWidth = imageWidth;
+        this.imageHeight = imageHeight;
+    }
+
+    public int getImageHeight() {
+        return imageHeight;
+    }
+
+
+    public float getTextSize() {
+        return textSize;
+    }
+
+    public void setTextSize(float textSize) {
+        this.textSize = textSize;
+    }
 
     public void setSelectedListener(OnTabItemSelectedListener selectedListener) {
         this.selectedListener = selectedListener;
