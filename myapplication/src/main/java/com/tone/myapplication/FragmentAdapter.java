@@ -16,8 +16,8 @@ public class FragmentAdapter extends FragmentStatePagerAdapter implements ListUp
     private String TAG = getClass().getSimpleName();
 
     private List<Channel> items = new ArrayList<>();
-    private List<Channel> newList = new ArrayList<>();
-    private ArrayMap<String, Fragment> fragments = new ArrayMap();
+//    private List<Channel> newList = new ArrayList<>();
+//    private ArrayMap<String, Fragment> fragments = new ArrayMap();
 
     public List<Channel> getItems() {
         return items;
@@ -28,7 +28,9 @@ public class FragmentAdapter extends FragmentStatePagerAdapter implements ListUp
     }
 
     public void setNewList(List<Channel> newList) {
-        this.newList = newList;
+//        this.newList = newList;
+        this.items = newList;
+        notifyDataSetChanged();
     }
 
     public void add(int index, String title) {
@@ -50,18 +52,22 @@ public class FragmentAdapter extends FragmentStatePagerAdapter implements ListUp
 //        items.add(1, title);
 //        notifyDataSetChanged();
 
+
     }
 
     @Override
     public Fragment getItem(int i) {
-        String key = items.get(i).getTitle();
-        Fragment fragment = fragments.get(key);
-        Log.d(TAG, "getItem:  key=" + key + "   fragment  = " + fragment);
-        if (fragment == null) {
-            fragment = BlackFragment.newInstance(items.get(i).getContent());
-            fragments.put(key, fragment);
-        }
-        Log.d(TAG, "getItem:  key=" + key + "   fragment  = " + fragment);
+//        String key = items.get(i).getId()+"";
+//        Fragment fragment = fragments.get(key);
+//        Log.d(TAG, "getItem:  key=" + key + "   fragment  = " + fragment);
+//        if (fragment == null) {
+//            fragment = BlackFragment.newInstance(items.get(i).getContent());
+//            fragments.put(key, fragment);
+//        }
+//        Log.d(TAG, "getItem:  key=" + key + "   fragment  = " + fragment);
+        BlackFragment fragment = BlackFragment.newInstance(items.get(i).getContent());
+        fragment.setChannel(items.get(i));
+        fragment.setPosition(i);
         return fragment;
     }
 
@@ -73,13 +79,21 @@ public class FragmentAdapter extends FragmentStatePagerAdapter implements ListUp
     @Override
     public int getItemPosition(@NonNull Object object) {
         Log.d(TAG, "getItemPosition: " + object);
-//        BlackFragment fragment = (BlackFragment) object;
+        BlackFragment fragment = (BlackFragment) object;
+        int position = fragment.getPosition();
+        if (position>=items.size())
+            return POSITION_NONE;
+        Channel channel = fragment.getChannel();
+        if (items.get(position) == channel)
+            return POSITION_UNCHANGED;
 //        String key = fragment.getTitle();
 //        int k1 = fragments.indexOfKey(key);
 //        int k2 = items.indexOf(key);
 //        if (k1 != k2)
+
         return POSITION_NONE;
 //        return super.getItemPosition(object);
+
     }
 
     @Nullable
@@ -92,7 +106,7 @@ public class FragmentAdapter extends FragmentStatePagerAdapter implements ListUp
     @Override
     public void onInserted(int position, int count) {
         Log.d(TAG, "onInserted:  position = " + position);
-        items.add(position,newList.get(position));
+//        items.add(position, newList.get(position));
         notifyDataSetChanged();
     }
 
@@ -107,7 +121,7 @@ public class FragmentAdapter extends FragmentStatePagerAdapter implements ListUp
     public void onMoved(int fromPosition, int toPosition) {
         Log.d(TAG, "onMoved:  fromPosition = " + fromPosition);
         Channel channel = items.remove(fromPosition);
-        items.add(toPosition,channel);
+        items.add(toPosition, channel);
         notifyDataSetChanged();
 
     }

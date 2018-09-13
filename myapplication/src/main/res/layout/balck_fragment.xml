@@ -9,4 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+
+    <com.tone.myapplication.DragRecyclerView
+        android:id="@+id/dragRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
 </android.support.constraint.ConstraintLayout>
